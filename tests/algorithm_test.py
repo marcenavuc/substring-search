@@ -18,6 +18,7 @@ CORONA = load_texts('coronavirus.txt')
 DON = load_texts('tihii_don_tom_1.txt')
 ANSWER_HUTOR = list(map(int, load_texts('Hutor_answer.txt').split()))
 ANSWER_DAD = list(map(int, load_texts('Dad_answer.txt').split()))
+ANSWER_BIG = list(map(int, load_texts('Big_answer.txt').split()))
 
 TESTS = [
     TestData('begin', LOREM_IPSUM, 'Lorem ipsum', [0]),
@@ -44,6 +45,10 @@ class TestAlgorithms(unittest.TestCase):
                 self.assertEqual(actual, test.expected,
                                  f'Error in {test.name} with {alg.name()}')
 
+    def test_big_file(self):
+        for alg in ALGORITHMS:
+            actual = alg.big_findall('big.txt', 'жалмерка')
+            self.assertEqual(actual, ANSWER_BIG, f'Error in {alg}')
 
 if __name__ == '__main__':
     unittest.main()
