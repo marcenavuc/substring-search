@@ -3,7 +3,8 @@ from algorithms.Algorithm import Algorithm
 
 class RabinKarpSearch(Algorithm):
 
-    def search(self, substring, text):
+    @staticmethod
+    def search(substring, text):
         window_start = ord(text[0])
         substring_hash = 0
         text_hash = 0

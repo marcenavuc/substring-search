@@ -1,37 +1,37 @@
-from tests.algorithm_test import ALGORITHMS, TestAlgorithms
+from tests.algorithm_test import TESTS
+from algorithms import ALGORITHMS
+from timeit import timeit
 import matplotlib.pyplot as plt
 import pandas as pd
 import argparse
-import timeit
 
 
 class Benchmark:
 
     def __init__(self, n_times=100):
-        self.tests = TestAlgorithms().TESTS
+        self.tests = TESTS
         self.n_times = n_times
 
         self.test_time = {}
         for test in self.tests:
-            self.test_time[test.name] = {}
-            for algorithm in ALGORITHMS:
-                self.test_time[test.name][algorithm.name] = []
+            self.test_time[test.name] = {alg.name(): [] for alg in ALGORITHMS}
+
+    @staticmethod
+    def permutation(a, b):
+        return zip(a * len(b), b * len(a))
 
     def run(self):
-        for algorithm in ALGORITHMS:
-            for test in self.tests:
-                for i in range(self.n_times):
-                    self.test_time[test.name][algorithm.name].append(
-                        timeit.timeit('algorithm.search(test.substring, '
-                                      'test.text)',
-                                      globals=locals(),
-                                      number=1))
+        execute = 'alg.search(test.substring, test.text)'
+        for test, alg in Benchmark.permutation(self.tests, ALGORITHMS):
+            for i in range(self.n_times):
+                self.test_time[test.name][alg.name()].append(
+                    timeit(execute, globals=locals(), number=1))
 
     def save_results(self, table_name, func=lambda table: table):
         writer = pd.ExcelWriter(table_name)
         for test in self.tests:
             test_table = pd.DataFrame(self.test_time[test.name],
-                                      columns=[alg.name for alg in ALGORITHMS])
+                                      columns=[alg.name() for alg in ALGORITHMS])
             func(test_table).to_excel(writer, sheet_name=test.name)
 
         writer.save()

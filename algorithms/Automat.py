@@ -3,7 +3,8 @@ from algorithms.Algorithm import Algorithm
 
 class Automat(Algorithm):
 
-    def search(self, substring, text):
+    @staticmethod
+    def search(substring, text):
         # Определяем алфавит
         alphabet = {}
         transition = [{} for i in range(len(substring) + 1)]

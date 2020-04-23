@@ -1,16 +1,17 @@
 """Интрефейс алгоритма"""
-from abc import ABC, abstractmethod
+from abc import ABC, abstractstaticmethod
 
 
 class Algorithm(ABC):
 
-    @abstractmethod
-    def search(self, substring, text):
+    @abstractstaticmethod
+    def search(substring, text):
         pass
 
-    def findall(self, substring, text):
-        return list(self.search(substring, text))
+    @classmethod
+    def findall(cls, substring, text):
+        return list(cls.search(substring, text))
 
-    @property
-    def name(self):
-        return self.__class__.__name__
+    @classmethod
+    def name(cls):
+        return cls.__name__
