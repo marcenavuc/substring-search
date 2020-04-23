@@ -56,5 +56,5 @@ class BoyerMooreSearch(Algorithm):
 
             step_shift = shift_table[len(substring) - j - 1]
             if max(step_stop, step_shift) > 1:
-                i += max(step_stop, step_shift)
+                i += max(step_stop, step_shift) - 1
             i += 1

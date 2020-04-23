@@ -14,12 +14,19 @@ def load_texts(file_name):
 
 
 LOREM_IPSUM = load_texts('lorem_ipsum.txt')
+CORONA = load_texts('coronavirus.txt')
+DON = load_texts('tihii_don_tom_1.txt')
+ANSWER_HUTOR = list(map(int, load_texts('Hutor_answer.txt').split()))
+ANSWER_DAD = list(map(int, load_texts('Dad_answer.txt').split()))
 
 TESTS = [
     TestData('begin', LOREM_IPSUM, 'Lorem ipsum', [0]),
     TestData('end', LOREM_IPSUM, 'Nullam', [193]),
     TestData('e', LOREM_IPSUM, 'e',
               [3, 24, 32, 35, 51, 58, 61, 64, 68, 71, 74, 81, 93, 130, 170]),
+    TestData('хутор', DON, 'хутор', ANSWER_HUTOR),
+    TestData('отец', DON, 'отец', ANSWER_DAD),
+    TestData('corona', CORONA, 'ACAATTAATTGCCAGGAACCTAA', [28553])
 ]
 
 
@@ -32,14 +39,10 @@ class TestAlgorithms(unittest.TestCase):
 
     def test_usual(self):
         for test in TESTS:
-            for algorithm in ALGORITHMS:
-                actual = algorithm.findall(test.substring, test.text)
+            for alg in ALGORITHMS:
+                actual = alg.findall(test.substring, test.text)
                 self.assertEqual(actual, test.expected,
-                                 f'Error in {test.name}')
-
-    def test_print(self):
-        for algorithm in ALGORITHMS:
-            print(algorithm.name())
+                                 f'Error in {test.name} with {alg.name()}')
 
 
 if __name__ == '__main__':
