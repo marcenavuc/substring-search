@@ -8,17 +8,21 @@ import unittest
 TestData = namedtuple('TestData', ['name', 'text', 'substring', 'expected'])
 
 
-def load_texts(file_name):
-    with pkg_resources.resource_stream(__name__, file_name) as file:
+def load_texts(filename):
+    with pkg_resources.resource_stream(__name__, filename) as file:
         return file.read().decode('utf-8')
 
 
-LOREM_IPSUM = load_texts('lorem_ipsum.txt')
-CORONA = load_texts('coronavirus.txt')
-DON = load_texts('tihii_don_tom_1.txt')
-ANSWER_HUTOR = list(map(int, load_texts('Hutor_answer.txt').split()))
-ANSWER_DAD = list(map(int, load_texts('Dad_answer.txt').split()))
-ANSWER_BIG = list(map(int, load_texts('big_answer.txt').split()))
+def load_answers(filename):
+    return list(map(int, load_texts(filename)))
+
+
+LOREM_IPSUM = load_texts('test texts/lorem_ipsum.txt')
+CORONA = load_texts('test texts/coronavirus.txt')
+DON = load_texts('test texts/tihii_don_tom_1.txt')
+ANSWER_HUTOR = load_answers('test answers/Hutor_answer.txt')
+ANSWER_DAD = load_answers('test answers/Dad_answer.txt')
+ANSWER_BIG = load_answers('test answers/big_answer.txt')
 
 TESTS = [
     TestData('begin', LOREM_IPSUM, 'Lorem ipsum', [0]),
@@ -47,8 +51,9 @@ class TestAlgorithms(unittest.TestCase):
 
     def test_big_file(self):
         for alg in ALGORITHMS:
-            actual = alg.big_findall('new_big.txt', 'Dumbledore')
-            self.assertEqual(actual, ANSWER_BIG, f'Error in {alg}')
+            with open('test texts/new_big.txt') as file:
+                actual = alg.big_findall(file, 'Dumbledore')
+                self.assertEqual(actual, ANSWER_BIG, f'Error in {alg}')
 
 
 if __name__ == '__main__':

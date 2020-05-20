@@ -1,11 +1,12 @@
 """Интрефейс алгоритма"""
-from abc import ABC, abstractstaticmethod
+from abc import ABC, abstractmethod
 from algorithms.BigIO import BigIO
 
 
 class Algorithm(ABC):
 
-    @abstractstaticmethod
+    @staticmethod
+    @abstractmethod
     def search(substring, text):
         pass
 
@@ -17,30 +18,11 @@ class Algorithm(ABC):
     def name(cls):
         return cls.__name__
 
-    # @classmethod
-    # def big_findall(cls, filename, substring):
-    #     try:
-    #         result = []
-    #         with open(filename) as file:
-    #             line = file.readline()
-    #             while line:
-    #                 if len(line) >= len(substring):
-    #                     match = list(cls.search(substring, line))
-    #                     match = list(map(lambda s: s + file.tell() - len(line),
-    #                                      match))
-    #                     result.extend(match)
-    #                 line = file.readline()
-    #
-    #         return result
-    #     except Exception as e:
-    #         print("Error with file. Try later", e)
-    #         return []
-
     @classmethod
-    def big_findall(cls, filename, substring):
+    def big_findall(cls, io_object, substring):
         try:
-            with BigIO(filename) as bigio:
+            with BigIO(io_object) as bigio:
                 return cls.findall(substring, bigio)
         except Exception as e:
-            print("Error with file. Try again later", e)
+            print("Error with file. Please, Try again later", e)
             return []
