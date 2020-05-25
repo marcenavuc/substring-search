@@ -27,14 +27,13 @@ class Benchmark:
     def run(self):
         start_mem = np.mean(memory_usage())
         execute = 'alg.search(test.substring, test.text)'
-        # for test, alg in Benchmark.permutation(self.tests, ALGORITHMS):
-        for test in TESTS:
-            for alg in ALGORITHMS:
-                for i in range(self.n_times):
-                    self.test_time[test.name][alg.name()].append(
-                        timeit(execute, globals=locals(), number=1))
-                    self.test_mem[test.name][alg.name()].append(
-                        max(memory_usage((alg.search, (test.substring, test.text)))) - start_mem)
+        for test, alg in Benchmark.permutation(TESTS, ALGORITHMS):
+            memory_expression = (alg.search, (test.substring, test.text))
+            for i in range(self.n_times):
+                self.test_time[test.name][alg.name()].append(
+                    timeit(execute, globals=locals(), number=1))
+                self.test_mem[test.name][alg.name()].append(
+                    max(memory_usage(memory_expression)) - start_mem)
 
     def save_results(self, table_name, samples, func=lambda table: table):
         writer = pd.ExcelWriter(table_name)
