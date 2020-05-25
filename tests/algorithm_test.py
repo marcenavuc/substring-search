@@ -14,7 +14,7 @@ def load_texts(filename):
 
 
 def load_answers(filename):
-    return list(map(int, load_texts(filename)))
+    return list(map(int, load_texts(filename).split()))
 
 
 LOREM_IPSUM = load_texts('test texts/lorem_ipsum.txt')
