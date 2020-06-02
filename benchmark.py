@@ -44,7 +44,7 @@ class Benchmark:
 
         writer.save()
 
-    def report(self, name, samples, pow=1e5):
+    def report(self, name, samples, pow=1e5, save=True):
         data = self.test_time
         figure, axises = plt.subplots(len(data), figsize=(15, 30))
         for i, test in enumerate(data):
@@ -57,7 +57,8 @@ class Benchmark:
                 axises[i].set_xlabel('runs')
                 axises[i].set_ylabel('time powed %s' % pow)
                 axises[i].legend()
-        figure.savefig(name, format='png')
+        if save:
+            figure.savefig(name, format='png')
 
 
 if __name__ == '__main__':

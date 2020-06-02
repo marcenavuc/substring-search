@@ -57,6 +57,12 @@ class TestAlgorithms(unittest.TestCase):
                 actual = alg.big_findall(text_io, 'ACAATTAATTGCCAGGAACCTAA')
                 self.assertEqual(actual, [28553], f'Error in {alg}')
 
+    def test_big_fail(self):
+        for alg in ALGORITHMS:
+            text_io = 'covid'
+            actual = alg.big_findall(text_io, 'ACAATTAATTGCCAGGAACCTAA')
+            self.assertEqual(actual, [], f'Error in {alg}')
+
 
 if __name__ == '__main__':
     unittest.main()
