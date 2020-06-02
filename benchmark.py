@@ -61,7 +61,7 @@ class Benchmark:
             figure.savefig(name, format='png')
 
 
-if __name__ == '__main__':
+def create_parser():
     parser = argparse.ArgumentParser(description='Simple benchmark for '
                                                  'substring searching '
                                                  'algorithms')
@@ -77,11 +77,10 @@ if __name__ == '__main__':
     parser.add_argument('--stat', dest='is_stat',
                         action='store_true',
                         help='save some statistic in stat.xlsx')
+    return parser
 
-    args = parser.parse_args()
-    benchmark = Benchmark(args.N)
-    benchmark.run()
 
+def todonext(benchmark, args):
     if args.is_save:
         benchmark.save_results('results_time.xlsx', benchmark.test_time)
         benchmark.save_results('results_mem.xlsx', benchmark.test_mem)
@@ -95,3 +94,11 @@ if __name__ == '__main__':
     if args.is_report:
         benchmark.report('results_time.png', benchmark.test_time)
         benchmark.report('results_mem.png', benchmark.test_mem, pow=1)
+
+
+if __name__ == '__main__':
+    args = create_parser().parse_args()
+    benchmark = Benchmark(args.N)
+    benchmark.run()
+    todonext(benchmark, args)
+
