@@ -1,15 +1,16 @@
 from collections import namedtuple
 import unittest
-import pkg_resources
+from pkg_resources import resource_stream
 from algorithms import ALGORITHMS
 from algorithms.algorithm import Algorithm
+import io
 
 
 TestData = namedtuple('TestData', ['name', 'text', 'substring', 'expected'])
 
 
 def load_texts(filename):
-    with pkg_resources.resource_stream(__name__, filename) as file:
+    with resource_stream(__name__, filename) as file:
         return file.read().decode('utf-8')
 
 
@@ -22,7 +23,6 @@ CORONA = load_texts('test texts/coronavirus.txt')
 DON = load_texts('test texts/tihii_don_tom_1.txt')
 ANSWER_HUTOR = load_answers('test answers/Hutor_answer.txt')
 ANSWER_DAD = load_answers('test answers/Dad_answer.txt')
-ANSWER_BIG = load_answers('test answers/big_answer.txt')
 
 TESTS = [
     TestData('begin', LOREM_IPSUM, 'Lorem ipsum', [0]),
@@ -49,11 +49,13 @@ class TestAlgorithms(unittest.TestCase):
                 self.assertEqual(actual, test.expected,
                                  f'Error in {test.name} with {alg.name()}')
 
-    def test_big_file(self):
+    def test_big_file_corona(self):
+        path = 'test texts/coronavirus.txt'
         for alg in ALGORITHMS:
-            with open('test texts/new_big.txt') as file:
-                actual = alg.big_findall(file, 'Dumbledore')
-                self.assertEqual(actual, ANSWER_BIG, f'Error in {alg}')
+            with resource_stream(__name__, path) as file:
+                text_io = io.StringIO(file.read().decode('utf-8'))
+                actual = alg.big_findall(text_io, 'ACAATTAATTGCCAGGAACCTAA')
+                self.assertEqual(actual, [28553], f'Error in {alg}')
 
 
 if __name__ == '__main__':
