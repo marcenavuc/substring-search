@@ -37,9 +37,9 @@ class Benchmark:
 
     def save_results(self, table_name, samples, func=lambda table: table):
         writer = pd.ExcelWriter(table_name)
+        columns = [alg.name() for alg in ALGORITHMS]
         for test in self.tests:
-            test_table = pd.DataFrame(samples[test.name],
-                                      columns=[alg.name() for alg in ALGORITHMS])
+            test_table = pd.DataFrame(samples[test.name], columns=columns)
             func(test_table).to_excel(writer, sheet_name=test.name)
 
         writer.save()

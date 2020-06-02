@@ -1,6 +1,6 @@
 import unittest
 import io
-from algorithms.BigIO import BigIO
+from algorithms.big_io import BigIO
 
 
 class TestBigIO(unittest.TestCase):

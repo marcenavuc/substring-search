@@ -1,4 +1,4 @@
-from algorithms.Algorithm import Algorithm
+from algorithms.algorithm import Algorithm
 
 
 class Automat(Algorithm):

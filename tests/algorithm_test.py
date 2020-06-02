@@ -1,8 +1,8 @@
 from collections import namedtuple
-from algorithms import ALGORITHMS
-from algorithms.Algorithm import Algorithm
-import pkg_resources
 import unittest
+import pkg_resources
+from algorithms import ALGORITHMS
+from algorithms.algorithm import Algorithm
 
 
 TestData = namedtuple('TestData', ['name', 'text', 'substring', 'expected'])
@@ -28,7 +28,7 @@ TESTS = [
     TestData('begin', LOREM_IPSUM, 'Lorem ipsum', [0]),
     TestData('end', LOREM_IPSUM, 'Nullam', [193]),
     TestData('e', LOREM_IPSUM, 'e',
-              [3, 24, 32, 35, 51, 58, 61, 64, 68, 71, 74, 81, 93, 130, 170]),
+             [3, 24, 32, 35, 51, 58, 61, 64, 68, 71, 74, 81, 93, 130, 170]),
     TestData('хутор', DON, 'хутор', ANSWER_HUTOR),
     TestData('отец', DON, 'отец', ANSWER_DAD),
     TestData('corona', CORONA, 'ACAATTAATTGCCAGGAACCTAA', [28553])

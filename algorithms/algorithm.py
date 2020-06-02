@@ -1,6 +1,6 @@
 """Интрефейс алгоритма"""
 from abc import ABC, abstractmethod
-from algorithms.BigIO import BigIO
+from algorithms.big_io import BigIO
 
 
 class Algorithm(ABC):
